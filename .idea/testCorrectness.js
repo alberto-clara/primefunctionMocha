@@ -18,5 +18,12 @@ describe('Test For Correctness', function () {
       chai.expect(cumulativeSum([10, 11, 12, 13, 14])).to.have.members([10, 21, 33, 46, 60]);
     });
   });
-
+  describe('maxPrimeSum', function () {
+    it('maxPrimeSum(100) => [41, 6] ', function () {
+      chai.expect(maxPrimeSum(100)).to.have.members([41, 6]);
+    });
+    it('maxPrimeSum(1000) => [953, 21]', function () {
+      chai.expect(maxPrimeSum(1000)).to.have.members([953, 21]);
+    });
+  });
 });
