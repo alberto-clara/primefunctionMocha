@@ -1,5 +1,5 @@
 /* eslint-env mocha, chai */
-/* global chai, foo */
+/* global chai, primeGen, cumulativeSum, maxPrimeSum */
 
 describe('Test For Correctness', function () {
   describe('primeGen', function () {
