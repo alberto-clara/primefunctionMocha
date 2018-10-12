@@ -72,5 +72,5 @@ console.log(cumulativeSum([10, 11, 12, 13, 14]));
 console.log(maxPrimeSum(100));
 console.log(maxPrimeSum(1000));
 
-const foo = 'foo';
-console.log(foo);
+// const foo = 'foo';
+// console.log(foo);
