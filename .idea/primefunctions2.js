@@ -3,18 +3,37 @@
 // CS320
 // prime functions
 
-function primeGen(n) {
-  const array = [];
-  for (let i = 2; i < n; i++) {
-    if (i === 2) array.push(i); else {
-      let prime = true;
-      for (let j = 2; j < i; j++) {
-        if (i % j === 0) prime = false;
+function isPrime(i) {
+  for (let x = 3; x < i; x+=2)
+    if (i % x === 0) return false;
+  return i > 1;
+}
+
+function Sum(n) {
+  let sum = 0;
+  for (let i = 0; i < n.length; i++) sum += n[i];
+  return sum;
+}
+
+function primeGen(limit) {
+  const bools = [];
+  const primes = [];
+  for (let i = 1; i < limit; i++) {
+    bools.push(true);
+  }
+  for (let i = 2; i < limit; i++) {
+    if (bools[i - 2]) {
+      for (let j = i * 2; j <= limit; j += i) {
+        bools[j - 2] = false;
       }
-      if (prime) array.push(i);
     }
   }
-  return array;
+  for (let p = 0; p < bools.length; p++) {
+    if (bools[p]) {
+      primes.push(p + 2);
+    }
+  }
+  return (primes);
 }
 
 function cumulativeSum(arr) {
@@ -29,48 +48,27 @@ function cumulativeSum(arr) {
   return total;
 }
 
-function isPrime(n) {
-  for (let x = 2; x < n; x++) if (n % x === 0) return false;
-  return n > 1;
-}
-
-function Sum(n) {
+function maxPrimeSum(n) { // this will display the total sum and how many prime number were sumed
+  const List = primeGen(n); // calls my primeGen function
+  let count = 0;
   let sum = 0;
-  for (let i = 0; i < n.length; i++) sum += n[i];
-  return sum;
-}
-
-function maxPrimeSum(n) {
-  const List = primeGen(n);
-  let nMax = 0;
-  let lenMax = 0;
-  let temp;
-  let array = [];
-  for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
-      array = List.slice(i, j);
-      temp = Sum(array);
-      if (nMax < temp) {
-        if (isPrime(temp) !== false) {
-          if (temp < n) {
-            if (array.length > lenMax) {
-              lenMax = array.length;
-              nMax = temp;
-            }
-          }
+  let minus = 0;
+  let listLen = List.length;
+  for (let i = 0; i < listLen; i++) { // starts the array
+    let tmp = 0;
+    for (let j = i; j < listLen; j++) { // this will increment the array
+      tmp += List[j];
+      if (tmp <= n) {
+        minus = j - i;
+        if (!(minus > count && isPrime(tmp) && tmp > sum)) {
+          continue;
         }
+        count = j - i;
+        sum = tmp;
+      } else { // will check if the amount of numbers is bigger than the input and will stop
+        break;
       }
     }
   }
-  return [nMax, lenMax];
+  return [sum, ++count];
 }
-
-console.log(primeGen(10));
-console.log(primeGen(20));
-console.log(cumulativeSum([1, 2, 3, 4]));
-console.log(cumulativeSum([10, 11, 12, 13, 14]));
-console.log(maxPrimeSum(100));
-console.log(maxPrimeSum(1000));
-
-// const foo = 'foo';
-// console.log(foo);
